@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yolee Escuadra | AI & Geospatial Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.5/babel.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        .gradient-text {
+            background-image: linear-gradient(to right, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #1e40af;
+            color: #bfdbfe;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin: 0.25rem;
+        }
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(96, 165, 250, 0.2), 0 4px 6px -2px rgba(96, 165, 250, 0.1);
+        }
+        .project-card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card-body {
+            flex-grow: 1;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #475569;
+            border-radius: 10px;
+            border: 2px solid #1e293b;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function NavBar() {
+            return (
+                <nav className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm py-4 shadow-md" role="navigation" aria-label="Main navigation">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                        <a href="/" className="text-xl font-bold text-white">Yolee Escuadra</a>
+                        <div className="space-x-4">
+                            <a href="#skills" className="text-gray-300 hover:text-white transition-colors">Skills</a>
+                            <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
+                            <a href="#experience" className="text-gray-300 hover:text-white transition-colors">Experience</a>
+                            <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+                        </div>
+                    </div>
+                </nav>
+            );
+        }
+
+        function Header() {
+            return (
+                <header className="text-center py-24 sm:py-32" role="banner">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white animate-fade-in">
+                        <span className="block">Yolee Escuadra</span>
+                        <span className="block gradient-text mt-2">AI & Geospatial Specialist</span>
+                    </h1>
+                    <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-400 animate-fade-in-up">
+                        A Technical Sales & Solutions Engineer with 15+ years of experience turning complex geospatial and AI technologies into tangible business outcomes.
+                    </p>
+                    <div className="mt-8 flex justify-center gap-4">
+                        <a href="#projects" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+                            View My Work
+                        </a>
+                        <a href="#contact" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+                            Get In Touch
+                        </a>
+                    </div>
+                </header>
+            );
+        }
+
+        function SkillCard({ title, description }) {
+            return (
+                <div className="bg-gray-800 border border-gray-700 rounded-lg p-5 transform hover:scale-105 transition-transform">
+                    <h3 className="text-lg font-semibold text-white">{title}</h3>
+                    <p className="text-gray-400 text-sm mt-1">{description}</p>
+                </div>
+            );
+        }
+
+        function SkillsSection() {
+            const skills = [
+                { title: "AI & Machine Learning", description: "Gemini, BigQuery ML, Predictive Modeling, NLP" },
+                { title: "Geospatial Analysis", description: "Google Maps Platform, Geospatial SQL, Clustering" },
+                { title: "Cloud Architecture", description: "Google Cloud, Serverless Functions, API Integration" },
+                { title: "Technical Sales & Solutions", description: "Consultative Selling, PoC Development, Demos" },
+            ];
+
+            return (
+                <section id="skills" className="section py-16" aria-labelledby="skills-heading">
+                    <h2 id="skills-heading" className="text-3xl font-bold text-center text-white mb-12">Core Competencies</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                        {skills.map((skill, index) => (
+                            <SkillCard key={index} title={skill.title} description={skill.description} />
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+
+        function ProjectCard({ title, description, image, link, linkText, tags }) {
+            return (
+                <div className="project-card rounded-lg overflow-hidden">
+                    <img src={image} alt={`${title} Project`} className="w-full h-48 object-cover" />
+                    <div className="p-6 project-card-content">
+                        <div className="project-card-body">
+                            <h3 className="text-xl font-bold text-white">{title}</h3>
+                            <p className="mt-2 text-gray-400">{description}</p>
+                            {link && (
+                                <div className="mt-4">
+                                    <a
+                                        href={link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-400 hover:text-blue-300 font-semibold text-sm inline-flex items-center"
+                                    >
+                                        {linkText}
+                                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-700">
+                            {tags.map((tag, index) => (
+                                <span key={index} className="tag">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ProjectsSection() {
+            const projects = [
+                {
+                    title: "Real Estate Valuation with BigQuery & Places Insights",
+                    description: "Co-authored a Google Maps Platform blog post showcasing an analysis on how proximity to amenities impacts property values.",
+                    image: "realestate.png",
+                    link: "https://mapsplatform.google.com/resources/blog/from-location-to-valuation-analyzing-real-estate-with-places-insights-in-bigquery/",
+                    linkText: "Read the Google Blog Post",
+                    tags: ["Google Maps Platform", "BigQuery ML", "Predictive Modeling"],
+                },
+                {
+                    title: "AI-Powered Utility Pole Detection",
+                    description: "Architected a solution using Gemini AI to detect utility poles in Street View images and triangulate their precise coordinates.",
+                    image: "objdetection.png",
+                    tags: ["Gemini AI", "Object Detection", "Street View API", "Geospatial Triangulation"],
+                },
+                {
+                    title: "Intelligent Geocoding Assistant",
+                    description: "Developed an AI agent that analyzes messy addresses to create an optimal API strategy, choosing between Geocoding and Places APIs.",
+                    image: "intelligentgeocoding.png",
+                    tags: ["Gemini AI", "Geocoding API", "Places API", "AI Agents"],
+                },
+                {
+                    title: "Logistics Centroid Creation Pipeline",
+                    description: "Engineered a data pipeline to normalize addresses, filter outliers, and calculate precise delivery centroids using DBSCAN clustering.",
+                    image: "centroids.png",
+                    tags: ["Python", "GeoPandas", "DBSCAN Clustering", "Data Pipeline"],
+                },
+                {
+                    title: "AI Site Selection Agent",
+                    description: "Created a conversational agent to help businesses find optimal new locations by querying BigQuery for demographic and competitor data.",
+                    image: "siteselector.png",
+                    tags: ["Conversational AI", "Gemini AI", "Google BigQuery"],
+                },
+                {
+                    title: "AI-Assisted Disaster Response",
+                    description: "Built a tool that uses Gemini to analyze disaster zone photos, assess damage, and geocode the location for mapping.",
+                    image: "disasterresponse.png",
+                    link: "https://devpost.com/software/disaster-response-with-google-maps-and-gemini",
+                    linkText: "View Devpost Submission",
+                    tags: ["Gemini AI", "Image Analysis", "Geocoding", "EXIF Processing"],
+                },
+            ];
+
+            return (
+                <section id="projects" className="section py-16" aria-labelledby="projects-heading">
+                    <h2 id="projects-heading" className="text-3xl font-bold text-center text-white mb-12">Featured Projects</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {projects.map((project, index) => (
+                            <ProjectCard
+                                key={index}
+                                title={project.title}
+                                description={project.description}
+                                image={project.image}
+                                link={project.link}
+                                linkText={project.linkText}
+                                tags={project.tags}
+                            />
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+
+        function ExperienceItem({ title, company, date, details }) {
+            return (
+                <div className="mb-10 ml-6">
+                    <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full -left-3 ring-8 ring-gray-900"></span>
+                    <h3 className="flex items-center mb-1 text-lg font-semibold text-white">{title} at {company}</h3>
+                    <time className="block mb-2 text-sm font-normal leading-none text-gray-500">{date}</time>
+                    <ul className="list-disc list-inside text-gray-400 space-y-1">
+                        {details.map((detail, index) => (
+                            <li key={index}>{detail}</li>
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        function ExperienceSection() {
+            const experiences = [
+                {
+                    title: "Technical Sales Engineer",
+                    company: "Navagis Inc.",
+                    date: "November 2021 - Present",
+                    details: [
+                        "Lead pre-sales and technical discovery for AI and geospatial solutions.",
+                        "Build prototypes integrating Google Maps APIs, BigQuery, and generative AI.",
+                        "Deliver workshops and presentations to C-level stakeholders.",
+                        "Mentor junior engineers and sales consultants on solution architecture.",
+                    ],
+                },
+                {
+                    title: "Small Business Owner",
+                    company: "Helen's",
+                    date: "June 2020 - Present",
+                    details: [],
+                },
+                {
+                    title: "Project Manager",
+                    company: "DXC Technology",
+                    date: "August 2010 - August 2019",
+                    details: [],
+                },
+                {
+                    title: "Software Quality and Service Management",
+                    company: "Hewlett-Packard",
+                    date: "July 2007 - August 2010",
+                    details: [],
+                },
+            ];
+
+            return (
+                <section id="experience" className="section py-16" aria-labelledby="experience-heading">
+                    <h2 id="experience-heading" className="text-3xl font-bold text-center text-white mb-12">Professional Experience</h2>
+                    <div className="max-w-3xl mx-auto">
+                        <div className="relative border-l-2 border-gray-700">
+                            {experiences.map((exp, index) => (
+                                <ExperienceItem
+                                    key={index}
+                                    title={exp.title}
+                                    company={exp.company}
+                                    date={exp.date}
+                                    details={exp.details}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function ContactSection() {
+            return (
+                <section id="contact" className="section text-center py-20" aria-labelledby="contact-heading">
+                    <h2 id="contact-heading" className="text-3xl font-bold text-white">Let's Connect</h2>
+                    <p className="mt-4 text-lg text-gray-400">
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+                    </p>
+                    <div className="mt-8">
+                        <a
+                            href="mailto:yoleeescuadra@gmail.com"
+                            className="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105"
+                        >
+                            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                            </svg>
+                            Say Hello
+                        </a>
+                    </div>
+                    <div className="mt-8 flex justify-center space-x-6">
+                        <a
+                            href="https://www.linkedin.com/in/yoleeescuadratechnicalsalesengineer"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-400 hover:text-white"
+                            aria-label="LinkedIn Profile"
+                        >
+                            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </a>
+                    </div>
+                </section>
+            );
+        }
+
+        function Footer() {
+            return (
+                <footer className="text-center py-8 text-gray-500 text-sm">
+                    <p>&copy; 2025 Yolee Escuadra. Located in Quezon City, Philippines.</p>
+                </footer>
+            );
+        }
+
+        function App() {
+            React.useEffect(() => {
+                const sections = document.querySelectorAll('.section');
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    },
+                    { threshold: 0.1 }
+                );
+                sections.forEach((section) => observer.observe(section));
+                return () => sections.forEach((section) => observer.unobserve(section));
+            }, []);
+
+            return (
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <NavBar />
+                    <Header />
+                    <main>
+                        <SkillsSection />
+                        <ProjectsSection />
+                        <ExperienceSection />
+                        <ContactSection />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
